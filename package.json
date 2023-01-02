@@ -20,6 +20,6 @@
     "url": "https://github.com/mikhama/core-js-101.git"
   },
   "dependencies": {
-    "node": "^13.9.0"
+    "node": "^16.9.1"
   }
 }
