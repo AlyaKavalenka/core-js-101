@@ -421,8 +421,19 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const arr = pathes.map((item) => item.split('/'));
+  const res = [];
+
+  for (let column = 0; column < arr[0].length; column += 1) {
+    let foo = false;
+    for (let row = 1; row < arr.length; row += 1) {
+      foo = arr[0][column] === arr[row][column];
+    }
+    if (foo === true) res.push(arr[0][column]);
+  }
+  if (res.length > 0) return `${res.join('/')}/`;
+  return '';
 }
 
 
@@ -444,20 +455,17 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  // const outputArray = [];
-  // for (let rowIndex = 0; rowIndex < m1.length; rowIndex += 1) {
-  //   outputArray.push([]);
-  //   for (let columnIndex = 0; columnIndex < m1[rowIndex].length; columnIndex += 1) {
-  //     let element = 0;
-  //     for (let secondColIndex = 0; secondColIndex < m2.length; secondColIndex += 1) {
-  //       element += m1[rowIndex][columnIndex] * m2[secondColIndex][rowIndex];
-  //     }
-  //     outputArray[rowIndex].push(element);
-  //   }
-  // }
-  // return outputArray;
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const res = new Array(m1.length).fill(0);
+  for (let row = 0; row < res.length; row += 1) {
+    res[row] = new Array(m2[row].length).fill(0);
+    for (let column = 0; column < m1.length; column += 1) {
+      for (let secondCol = 0; secondCol < m2.length; secondCol += 1) {
+        res[row][column] += m1[row][secondCol] * m2[secondCol][column];
+      }
+    }
+  }
+  return res;
 }
 
 
@@ -491,8 +499,36 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  for (let i = 0; i < 3; i += 1) {
+    if (
+      position[i][0] === position[i][1]
+      && position[i][1] === position[i][2]
+      && position[i][0] !== undefined
+    ) {
+      return position[i][0];
+    }
+  }
+  for (let i = 0; i < 3; i += 1) {
+    if (
+      position[0][i] === position[1][i]
+      && position[1][i] === position[2][i]
+      && position[0][i] !== undefined
+    ) {
+      return position[0][i];
+    }
+  }
+  if (position[0][0] === position[1][1]
+      && position[1][1] === position[2][2]
+      && position[0][0] !== undefined) {
+    return position[0][0];
+  }
+  if (position[2][0] === position[1][1]
+    && position[1][1] === position[0][2]
+    && position[2][0] !== undefined) {
+    return position[2][0];
+  }
+  return undefined;
 }
 
 
